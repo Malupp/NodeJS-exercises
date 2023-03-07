@@ -1,4 +1,4 @@
-The answer is: content-type: application/json; charset=utf-8
+## The answer is: content-type: application/json; charset=utf-8
 
 This is what appear from the include command: (curl https://jsonplaceholder.typicode.com/posts/1/comments -i)
 
