@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@types/supertest": "^2.0.12",
-    "figlet": "^1.5.2"
-  }
-}
