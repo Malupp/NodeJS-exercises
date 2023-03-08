@@ -1,5 +1,18 @@
 {
   "dependencies": {
     "figlet": "^1.5.2"
-  }
+  },
+  "name": "nodejs-exercise",
+  "version": "1.0.0",
+  "main": "app.test.js",
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
