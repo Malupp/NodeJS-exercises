@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
-const port = 3000;
+require("dotenv/config");
+const port = process.env.PORT;
 app_1.default.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}/movies`);
 });
