@@ -1,6 +1,0 @@
-The bumblebee bat is the world's smallest mammal (stdout)
-┌─────────┬────────────┬──────────────┐
-│ (index) │    name    │   children   │
-├─────────┼────────────┼──────────────┤
-│    0    │ 'Person 1' │ [ [Object] ] │
-└─────────┴────────────┴──────────────┘
