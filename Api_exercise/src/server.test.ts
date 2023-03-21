@@ -31,7 +31,7 @@ describe("GET /planet/:id", () => {
         expect(res.body).toEqual(planet);
     });
 
-    test("Planet does not exist", () => {
+    test("Planet does not exist", async () => {
          // @ts-ignore
          prismaMock.planet.findUnique.mockResolvedValue(null);
 
@@ -54,6 +54,40 @@ describe("GET /planet/:id", () => {
    })
 });
 
+describe("DELETE /planet/:id", () => {
+    test("Valid request", async () => {
+        // @ts-ignore
+        prismaMock.planet.findUnique.mockResolvedValue(planet);
+
+        const res = await request
+            .get("/planets/1")
+            .expect(204)
+
+        expect(res.text).toEqual('');
+    });
+
+    test("Planet does not exist", async () => {
+         // @ts-ignore
+         prismaMock.planet.delete.mockRejectedValue(new Error('Error'));
+
+         const response = await request
+                .get("/planets/4")
+                .expect(404)
+                .expect("Content-Type", /text\/html/);
+
+        expect(response.text).toContain("Cannot DELETE /planets/4")
+    })
+
+    test("Invalid planet ID", async () => {
+
+        const response = await request
+               .get("/planets/asdf")
+               .expect(404)
+               .expect("Content-Type", /text\/html/);
+
+       expect(response.text).toContain("Cannot DELETE /planets/asdf")
+   })
+});
 
 describe("POST /planets", () => {
     test("Valid request", async () => {
