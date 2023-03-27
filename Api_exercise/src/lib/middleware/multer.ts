@@ -22,7 +22,7 @@ const MAX_SIZE_IN_MEGABYTES = 6 * 1024 * 1024;
 
 const VALID_MIME_TYPES = ["image/png", "image/jpg"];
 
-const fileFilter: multer.Options = (request, file, callback) => {
+const fileFilter: multer.Options["fileFilter"] = (request, file, callback) => {
     if (VALID_MIME_TYPES.includes(file.mimetype)) {
         callback(null, true);
     } else {
