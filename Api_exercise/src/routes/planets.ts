@@ -8,6 +8,8 @@ import {
     PlanetData,
 } from "../lib/middleware/validation";
 
+import { checkAuthorization } from "../lib/middleware/passport";
+
 import { initMulterMiddleware } from "../lib/middleware/multer";
 
 const upload = initMulterMiddleware();
@@ -35,7 +37,7 @@ router.get("/:id(\\d+)", async (req, res, next) => {
     res.json(planet);
 });
 
-router.post("/", validate({ body: planetSchema }), async (req, res) => {
+router.post("/", checkAuthorization, validate({ body: planetSchema }), async (req, res) => {
     const PlanetData = req.body;
 
     const planet = await prisma.planet.create({
@@ -45,7 +47,7 @@ router.post("/", validate({ body: planetSchema }), async (req, res) => {
     res.status(201).json(planet);
 });
 
-router.put("/:id(\\d+)", validate({ body: planetSchema }), async (req, res) => {
+router.put("/:id(\\d+)", checkAuthorization, validate({ body: planetSchema }), async (req, res) => {
     const planetData: PlanetData = req.body;
 
     const planet = await prisma.planet.create({
@@ -54,7 +56,7 @@ router.put("/:id(\\d+)", validate({ body: planetSchema }), async (req, res) => {
     res.status(201).json(planet);
 });
 
-router.delete("/:id(\\d+)", async (req, res, next) => {
+router.delete("/:id(\\d+)", checkAuthorization, async (req, res, next) => {
     const planetId = Number(req.params.id);
     try {
         await prisma.planet.delete({
@@ -69,6 +71,7 @@ router.delete("/:id(\\d+)", async (req, res, next) => {
 
 router.post(
     "/:id(\\d+)/photo",
+    checkAuthorization,
     upload.single("photo"),
     async (req, res, next) => {
         if (!req.file) {
