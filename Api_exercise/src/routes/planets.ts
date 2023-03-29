@@ -45,7 +45,7 @@ router.post("/", validate({ body: planetSchema }), async (req, res) => {
     res.status(201).json(planet);
 });
 
-router.put("/:id(\\d+", validate({ body: planetSchema }), async (req, res) => {
+router.put("/:id(\\d+)", validate({ body: planetSchema }), async (req, res) => {
     const planetData: PlanetData = req.body;
 
     const planet = await prisma.planet.create({
