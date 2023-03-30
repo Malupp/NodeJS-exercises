@@ -4,8 +4,6 @@ import supertest from "supertest";
 import { prismaMock } from "./lib/prisma/client.mock";
 
 import app from "./app";
-import { Planet } from "@prisma/client";
-import exp from "node:constants";
 
 jest.useFakeTimers();
 
