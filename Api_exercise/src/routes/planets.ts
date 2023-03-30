@@ -12,6 +12,7 @@ import { checkAuthorization } from "../lib/middleware/passport";
 
 import { initMulterMiddleware } from "../lib/middleware/multer";
 
+
 const upload = initMulterMiddleware();
 
 const router = Router();
@@ -39,9 +40,14 @@ router.get("/:id(\\d+)", async (req, res, next) => {
 
 router.post("/", checkAuthorization, validate({ body: planetSchema }), async (req, res) => {
     const PlanetData = req.body;
-
+    const username = req.user?.username as string;
     const planet = await prisma.planet.create({
-        data: PlanetData,
+        data: {
+            ...PlanetData,
+            createdBy: username,
+            updatedBy: username,
+
+        }
     });
 
     res.status(201).json(planet);
@@ -49,11 +55,19 @@ router.post("/", checkAuthorization, validate({ body: planetSchema }), async (re
 
 router.put("/:id(\\d+)", checkAuthorization, validate({ body: planetSchema }), async (req, res) => {
     const planetData: PlanetData = req.body;
+    const planetId = Number(req.params.planetId)
+    const username = req.user?.username as string;
+    try {
+        const planet = await prisma.planet.update({
+            where: { id: planetId },
+            data: {
+                ...planetData,
+                updatedBy: username,
+            }
+        });
+        res.status(201).json(planet);
+    }
 
-    const planet = await prisma.planet.create({
-        data: planetData,
-    });
-    res.status(201).json(planet);
 });
 
 router.delete("/:id(\\d+)", checkAuthorization, async (req, res, next) => {
